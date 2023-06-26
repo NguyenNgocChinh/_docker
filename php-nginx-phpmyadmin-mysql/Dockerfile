@@ -6,20 +6,20 @@ WORKDIR /var/www/html
 
 # Install Additional dependencies
 RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y \
-        curl \
-        libpng-dev \
-        libonig-dev \
-        libxml2-dev \
-        zip \
-        unzip \
-        git \
-        libzip-dev \
-        supervisor \
-        && docker-php-ext-install pcntl \
-        && apt-get clean && rm -rf /var/lib/apt/lists/* \
-        && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  apt-get upgrade -y && \
+  apt-get install -y \
+  curl \
+  libpng-dev \
+  libonig-dev \
+  libxml2-dev \
+  zip \
+  unzip \
+  git \
+  libzip-dev \
+  supervisor \
+  && docker-php-ext-install pcntl \
+  && apt-get clean && rm -rf /var/lib/apt/lists/* \
+  && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install specific version of Node.js and npm
 RUN curl -sL https://deb.nodesource.com/setup_19.x | bash -
@@ -44,10 +44,10 @@ COPY .docker/supervisor.d /etc/supervisor.d
 RUN useradd -ms /bin/bash deployer
 
 RUN chown -R deployer:deployer . /var/www/html && \
-    chmod -R 755 /var/www/html && \
-    chmod -R 755 /etc/supervisord.conf && \
-    chmod -R 755 /etc/supervisor.d && \
-    cd /var/www/html
+  chmod -R 755 /var/www/html && \
+  chmod -R 755 /etc/supervisord.conf && \
+  chmod -R 755 /etc/supervisor.d && \
+  cd /var/www/html
 
 # Use the default production configuration for PHP-FPM ($PHP_INI_DIR variable already set by the default image)
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
@@ -62,7 +62,7 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 # RUN mkdir -p /etc/crontabs
 # RUN echo "* * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" >> /etc/crontabs/www-data
 
-ENTRYPOINT ["sh", "/var/www/html/.docker/docker-entrypoint.sh"]
+# ENTRYPOINT ["sh", "/var/www/html/.docker/docker-entrypoint.sh"]
 
 # Set the user for subsequent commands
 USER deployer
